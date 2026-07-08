@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+
+<h1>Dashboard</h1>
+
+<h2>Welcome {{ session('name') }}</h2>
+
+<a href="{{ url('/logout') }}">Logout</a>
+
+</body>
+</html>
