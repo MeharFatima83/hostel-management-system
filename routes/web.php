@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication;
+use App\Http\Controllers\adminController;
 
 Route::get('/', function () {
     return redirect('/register');
@@ -18,3 +19,4 @@ Route::get('/dashboard', [Authentication::class,'dashboard'])->name('dashboard')
 
 // Logout
 Route::get('/logout', [Authentication::class,'logout']);
+Route::get('/adminDashboard',[adminController::class,'adminDashboard']);

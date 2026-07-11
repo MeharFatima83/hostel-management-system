@@ -83,4 +83,5 @@ class Authentication extends Controller
 
         return redirect('/login');
     }
+   
 }
