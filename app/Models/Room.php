@@ -13,4 +13,9 @@ class Room extends Model
         'rent',
         'status'
     ];
+
+public function roomAllocations()
+{
+    return $this->hasMany(RoomAllocation::class);
+}
 }

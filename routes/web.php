@@ -45,3 +45,14 @@ Route::get('/rooms/edit/{id}', [RoomController::class,'edit']);
 Route::post('/rooms/update/{id}', [RoomController::class,'update']);
 
 Route::get('/rooms/delete/{id}', [RoomController::class,'destroy']);
+
+use App\Http\Controllers\FeeController;
+
+Route::get('/fees', [FeeController::class,'index']);
+Route::get('/fees/create', [FeeController::class,'create']);
+Route::post('/fees/store', [FeeController::class,'store']);
+
+Route::get('/fees/edit/{id}', [FeeController::class,'edit']);
+Route::post('/fees/update/{id}', [FeeController::class,'update']);
+
+Route::get('/fees/delete/{id}', [FeeController::class,'destroy']);

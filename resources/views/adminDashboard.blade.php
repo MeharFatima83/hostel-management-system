@@ -238,8 +238,10 @@
 
             <div class="card rooms">
                 <i class="fa-solid fa-bed"></i>
+                
+
                 <h3>Total Rooms</h3>
-                <h1>60</h1>
+                <h1>{{ $totalRooms }}</h1>
             </div>
 
             <div class="card booking">

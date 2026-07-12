@@ -18,4 +18,9 @@ class Student extends Model
         'parent_contact',
         'fees_status',
     ];
+
+public function roomAllocations()
+{
+    return $this->hasMany(RoomAllocation::class);
+}
 }

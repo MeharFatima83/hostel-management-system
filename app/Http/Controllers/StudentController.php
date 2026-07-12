@@ -35,7 +35,7 @@ public function store(Request $request)
         'fees_status' => $request->fees_status,
     ]);
 
-    return redirect('/students/create')
+    return redirect('/students')
     ->with('success', 'Student added successfully.');
 }
 
