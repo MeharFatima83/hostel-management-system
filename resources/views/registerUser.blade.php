@@ -1,171 +1,631 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Registration</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Registration | HostelHub</title>
+
+
+    <style>
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+
+        body {
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+
+                radial-gradient(
+
+                    circle at 15% 20%,
+
+                    #555555 0%,
+
+                    transparent 28%
+
+                ),
+
+                radial-gradient(
+
+                    circle at 85% 80%,
+
+                    #3d3d3d 0%,
+
+                    transparent 30%
+
+                ),
+
+                linear-gradient(
+
+                    135deg,
+
+                    #222222,
+
+                    #3a3a3a,
+
+                    #1b1b1b
+
+                );
+
+            color: white;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 30px;
+
+        }
+
+
+        /* ================= REGISTER CARD ================= */
+
+        .register-card {
+
+            width: 100%;
+
+            max-width: 480px;
+
+            background: rgba(20, 20, 20, 0.95);
+
+            border: 1px solid #555555;
+
+            border-radius: 22px;
+
+            padding: 38px;
+
+            box-shadow:
+
+                0 20px 60px rgba(0, 0, 0, 0.55);
+
+            animation: fadeIn 0.6s ease;
+
+        }
+
+
+        /* ================= ANIMATION ================= */
+
+        @keyframes fadeIn {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(20px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .logo {
+
+            text-align: center;
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
+
+            color: #ffffff;
+
+        }
+
+
+        .logo span {
+
+            color: #bdbdbd;
+
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #bdbdbd;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+
+            margin-bottom: 18px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #eeeeee;
+
+        }
+
+
+        input,
+
+        textarea {
+
+            width: 100%;
+
+            padding: 14px;
+
+            background: #f5f5f5;
+
+            border: 1px solid #aaaaaa;
+
+            border-radius: 10px;
+
+            color: #111111;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.3s;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+        }
+
+
+        input::placeholder,
+
+        textarea::placeholder {
+
+            color: #777777;
+
+        }
+
+
+        input:focus,
+
+        textarea:focus {
+
+            border-color: white;
+
+            background: white;
+
+            box-shadow:
+
+                0 0 0 3px rgba(255, 255, 255, 0.12);
+
+        }
+
+
+        textarea {
+
+            height: 90px;
+
+            resize: none;
+
+        }
+
+
+        /* ================= BUTTON ================= */
+
+        button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: white;
+
+            color: #111111;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+            margin-top: 5px;
+
+        }
+
+
+        button:hover {
+
+            background: #dddddd;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+
+                0 8px 20px rgba(255, 255, 255, 0.15);
+
+        }
+
+
+        /* ================= SUCCESS MESSAGE ================= */
+
+        .success-message {
+
+            background: #292929;
+
+            border: 1px solid #777777;
+
+            color: #ffffff;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            margin-top: 18px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+        }
+
+
+        /* ================= ERROR MESSAGE ================= */
+
+        .error-list {
+
+            margin-top: 18px;
+
+            padding: 12px 15px;
+
+            background: #292929;
+
+            border: 1px solid #666666;
+
+            border-radius: 8px;
+
+        }
+
+
+        .error-list li {
+
+            color: #ff9b9b;
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .error-list li:last-child {
+
+            margin-bottom: 0;
+
+        }
+
+
+        /* ================= LOGIN LINK ================= */
+
+        .login-text {
+
+            text-align: center;
+
+            margin-top: 24px;
+
+            font-size: 14px;
+
+            color: #bdbdbd;
+
+        }
+
+
+        .login-text a {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            margin-left: 5px;
+
+        }
+
+
+        .login-text a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 550px) {
+
+            body {
+
+                padding: 20px;
+
+            }
+
+
+            .register-card {
+
+                padding: 28px 22px;
+
+            }
+
+
+            .logo {
+
+                font-size: 24px;
+
+            }
+
+        }
+
+    </style>
+
 </head>
 
-<body style="margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:linear-gradient(135deg,#89f7fe,#66a6ff,#fbc2eb,#a18cd1);
-background-size:400% 400%;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;">
 
-<div style="
-width:420px;
-background:white;
-padding:30px;
-border-radius:20px;
-box-shadow:0 15px 35px rgba(0,0,0,0.25);
-">
+<body>
 
-<h1 style="
-text-align:center;
-margin-bottom:8px;
-color:#5b21b6;">
-🏠 Hostel Registration
-</h1>
 
-<p style="
-text-align:center;
-color:#666;
-margin-bottom:25px;">
-Create your student account
-</p>
+<div class="register-card">
 
-<form action="/register" method="POST">
-@csrf
-<label style="font-weight:bold;">Full Name</label><br>
-<input type="text"
-placeholder="Enter your full name" name="name"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:18px;
-border:2px solid #cbd5e1;
-border-radius:10px;
-font-size:15px;
-box-sizing:border-box;
-outline:none;
-">
 
-<label style="font-weight:bold;">Mobile Number</label><br>
-<input type="text"
-placeholder="Enter mobile number" name="mobile"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:18px;
-border:2px solid #cbd5e1;
-border-radius:10px;
-font-size:15px;
-box-sizing:border-box;
-outline:none;
-">
+    <!-- HEADER -->
 
-<label style="font-weight:bold;">Address</label><br>
-<textarea
-placeholder="Enter your address" name="address"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:18px;
-border:2px solid #cbd5e1;
-border-radius:10px;
-font-size:15px;
-height:80px;
-resize:none;
-box-sizing:border-box;
-outline:none;
-"></textarea>
+    <div class="logo">
 
-<label style="font-weight:bold;">Password</label><br>
-<input type="password"
-placeholder="Create password" name="password"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:18px;
-border:2px solid #cbd5e1;
-border-radius:10px;
-font-size:15px;
-box-sizing:border-box;
-outline:none;
-">
+        🏠 Hostel<span>Hub</span>
 
-<label style="font-weight:bold;">Confirm Password</label><br>
-<input type="password" name="confirm_password"
-placeholder="Confirm password"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:25px;
-border:2px solid #cbd5e1;
-border-radius:10px;
-font-size:15px;
-box-sizing:border-box;
-outline:none;
-">
+    </div>
 
-<button
-type="submit"
-style="
-width:100%;
-padding:14px;
-border:none;
-border-radius:12px;
-background:linear-gradient(to right,#ff6a00,#ee0979);
-color:white;
-font-size:17px;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;">
-Register
-</button>
-  @if(session('success'))
-        <div style="background:#d4edda; color:#155724; padding:10px; border-radius:5px; margin-top:15px; text-align:center;">
-            {{ session('success') }}
+
+    <p class="subtitle">
+
+        Create your student account
+
+    </p>
+
+
+    <!-- REGISTER FORM -->
+
+    <form action="{{ url('/register') }}" method="POST">
+
+        @csrf
+
+
+        <!-- NAME -->
+
+        <div class="form-group">
+
+            <label>
+
+                Full Name
+
+            </label>
+
+
+            <input
+
+                type="text"
+
+                name="name"
+
+                placeholder="Enter your full name"
+
+                value="{{ old('name') }}"
+
+                required>
+
         </div>
-    @endif
-        @php
-        $ers = ['name','mobile','password','address','confirm_password'];
-    @endphp
-
-    <ul style="padding-left:20px;">
-        @foreach($ers as $er)
-            @error($er)
-                <li style="color:red;">{{ $message }}</li>
-            @enderror
-        @endforeach
-    </ul>
 
 
-<p style="
-text-align:center;
-margin-top:20px;
-font-size:14px;
-color:#666;">
-Already have an account?
-<a href="/login" style="
-text-decoration:none;
-color:#6d28d9;
-font-weight:bold;">
-Login
-</a>
-</p>
+        <!-- MOBILE -->
 
-</form>
+        <div class="form-group">
+
+            <label>
+
+                Mobile Number
+
+            </label>
+
+
+            <input
+
+                type="text"
+
+                name="mobile"
+
+                placeholder="Enter mobile number"
+
+                value="{{ old('mobile') }}"
+
+                required>
+
+        </div>
+
+
+        <!-- ADDRESS -->
+
+        <div class="form-group">
+
+            <label>
+
+                Address
+
+            </label>
+
+
+            <textarea
+
+                name="address"
+
+                placeholder="Enter your address"
+
+                required>{{ old('address') }}</textarea>
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+            <label>
+
+                Password
+
+            </label>
+
+
+            <input
+
+                type="password"
+
+                name="password"
+
+                placeholder="Create password"
+
+                required>
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div class="form-group">
+
+            <label>
+
+                Confirm Password
+
+            </label>
+
+
+            <input
+
+                type="password"
+
+                name="confirm_password"
+
+                placeholder="Confirm password"
+
+                required>
+
+        </div>
+
+
+        <!-- BUTTON -->
+
+        <button type="submit">
+
+            Create Account →
+
+        </button>
+
+
+        <!-- SUCCESS MESSAGE -->
+
+        @if(session('success'))
+
+            <div class="success-message">
+
+                {{ session('success') }}
+
+            </div>
+
+        @endif
+
+
+        <!-- ERRORS -->
+
+        @if($errors->any())
+
+            <ul class="error-list">
+
+                @foreach($errors->all() as $error)
+
+                    <li>
+
+                        {{ $error }}
+
+                    </li>
+
+                @endforeach
+
+            </ul>
+
+        @endif
+
+
+        <!-- LOGIN -->
+
+        <p class="login-text">
+
+            Already have an account?
+
+            <a href="{{ url('/login') }}">
+
+                Login
+
+            </a>
+
+        </p>
+
+
+    </form>
 
 </div>
 
+
 </body>
+
 </html>

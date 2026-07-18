@@ -7,58 +7,77 @@ use App\Models\User;
 use App\Models\Student;
 use App\Models\Room;
 use App\Models\Fee;
-use App\Models\Booking;
 use App\Models\Complaint;
 use App\Models\Notice;
+use App\Models\RoomAllocation;
+use App\Models\ContactMessage;
 
 class adminController extends Controller
 {
     public function adminDashboard()
     {
-        // Dashboard Statistics
-        
-        $totalStudents = Student::count();
-        $totalRooms = Room::count();
-
-        $totalFeesCollected = Fee::where('status', 'Paid')
-                                ->sum('paid_amount');
-
-        $pendingFees = Fee::where('status', 'Pending')->count();
-
-        return view('adminDashboard', compact(
-            'totalStudents',
-            'totalRooms',
-            'totalFeesCollected',
-            'pendingFees'
-        ));
-
         $totalStudents = Student::count();
 
         $totalRooms = Room::count();
+
+        $occupiedRooms = RoomAllocation::where(
+            'status',
+            'Allocated'
+        )->count();
+
+        $vacantRooms = $totalRooms - $occupiedRooms;
 
         $totalUsers = User::count();
 
-        $totalBookings = Booking::count();
+        $totalMessages = ContactMessage::count();
 
         $totalComplaints = Complaint::count();
 
+        $pendingComplaints = Complaint::where(
+            'status',
+            'Pending'
+        )->count();
+
         $totalNotices = Notice::count();
 
-        $totalFeesCollected = Fee::where('status', 'Paid')
-                                 ->sum('paid_amount');
+        $totalFeesCollected = Fee::where(
+            'status',
+            'Paid'
+        )->sum('paid_amount');
 
-        $pendingFees = Fee::where('status', 'Pending')
-                          ->count();
+        $pendingFees = Fee::where(
+            'status',
+            'Pending'
+        )->sum('due_amount');
 
-        return view('adminDashboard', compact(
-            'totalStudents',
-            'totalRooms',
-            'totalUsers',
-            'totalBookings',
-            'totalComplaints',
-            'totalNotices',
-            'totalFeesCollected',
-            'pendingFees'
-        ));
+
+        return view(
+            'adminDashboard',
+            compact(
+
+                'totalStudents',
+
+                'totalRooms',
+
+                'occupiedRooms',
+
+                'vacantRooms',
+
+                'totalUsers',
+
+                'totalMessages', // ✅ YE MISSING THA
+
+                'totalComplaints',
+
+                'pendingComplaints',
+
+                'totalNotices',
+
+                'totalFeesCollected',
+
+                'pendingFees'
+
+            )
+        );
     }
 }

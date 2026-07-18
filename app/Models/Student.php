@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    protected $table = 'students';
-
     protected $fillable = [
+        'user_id',
         'name',
         'mobile',
         'address',
@@ -16,11 +15,26 @@ class Student extends Model
         'course',
         'gender',
         'parent_contact',
-        'fees_status',
+        'fees_status'
     ];
 
-public function roomAllocations()
-{
-    return $this->hasMany(RoomAllocation::class);
-}
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function fees()
+    {
+        return $this->hasMany(Fee::class);
+    }
+
+    public function complaints()
+    {
+        return $this->hasMany(Complaint::class);
+    }
+
+    public function roomAllocation()
+    {
+        return $this->hasOne(RoomAllocation::class);
+    }
 }

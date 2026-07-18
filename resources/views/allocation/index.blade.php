@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Fee Management</title>
+    <title>Room Allocation</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
           rel="stylesheet">
@@ -16,23 +16,25 @@
 <div class="container mt-5">
 
     <!-- Header -->
-    <div class="position-relative mb-4 text-center">
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
         <!-- Back Button -->
         <a href="{{ url('/adminDashboard') }}"
-           class="btn btn-secondary position-absolute start-0 top-0">
+           class="btn btn-secondary">
             ← Back to Admin Dashboard
         </a>
 
-        <!-- Heading -->
-        <h2 class="text-primary">
-            💰 Fee Management
-        </h2>
 
-        <!-- Add Fee Button -->
-        <a href="{{ url('/fees/create') }}"
-           class="btn btn-primary position-absolute end-0 top-0">
-            + Add Fee
+        <!-- Heading -->
+        <h1 class="text-primary mb-0">
+            🏠 Room Allocation
+        </h1>
+
+
+        <!-- Allocate Room Button -->
+        <a href="{{ url('/allocations/create') }}"
+           class="btn btn-primary">
+            + Allocate Room
         </a>
 
     </div>
@@ -48,73 +50,63 @@
     @endif
 
 
-    <!-- Fee Table -->
+    <!-- Allocation Table -->
     <div class="card shadow">
 
         <div class="card-body">
 
-            <table class="table table-hover table-bordered align-middle">
+            <table class="table table-bordered table-hover">
 
                 <thead class="table-dark">
 
-                <tr>
+                    <tr>
 
-                    <th>ID</th>
-                    <th>Student Name</th>
-                    <th>Total Fee</th>
-                    <th>Paid Amount</th>
-                    <th>Due Amount</th>
-                    <th>Payment Date</th>
-                    <th>Status</th>
-                    <th width="180">Action</th>
+                        <th>ID</th>
+                        <th>Student</th>
+                        <th>Room</th>
+                        <th>Allocation Date</th>
+                        <th>Status</th>
+                        <th width="180">Action</th>
 
-                </tr>
+                    </tr>
 
                 </thead>
 
 
                 <tbody>
 
-                @forelse($fees as $fee)
+                @forelse($allocations as $allocation)
 
                     <tr>
 
                         <td>
-                            {{ $fee->id }}
+                            {{ $allocation->id }}
                         </td>
 
                         <td>
-                            {{ $fee->student->name ?? 'No Student Assigned' }}
+                            {{ $allocation->student->name ?? 'No Student' }}
                         </td>
 
                         <td>
-                            ₹{{ $fee->total_fee }}
+                            {{ $allocation->room->room_number ?? 'No Room' }}
                         </td>
 
                         <td>
-                            ₹{{ $fee->paid_amount }}
-                        </td>
-
-                        <td>
-                            ₹{{ $fee->due_amount }}
-                        </td>
-
-                        <td>
-                            {{ $fee->payment_date }}
+                            {{ $allocation->allocation_date }}
                         </td>
 
                         <td>
 
-                            @if($fee->status == "Paid")
+                            @if($allocation->status == "Allocated")
 
                                 <span class="badge bg-success">
-                                    Paid
+                                    Allocated
                                 </span>
 
                             @else
 
                                 <span class="badge bg-danger">
-                                    Pending
+                                    Vacated
                                 </span>
 
                             @endif
@@ -124,7 +116,7 @@
                         <td>
 
                             <!-- Edit -->
-                            <a href="{{ url('/fees/edit/'.$fee->id) }}"
+                            <a href="{{ url('/allocations/edit/'.$allocation->id) }}"
                                class="btn btn-warning btn-sm">
 
                                 ✏️ Edit
@@ -133,9 +125,9 @@
 
 
                             <!-- Delete -->
-                            <a href="{{ url('/fees/delete/'.$fee->id) }}"
+                            <a href="{{ url('/allocations/delete/'.$allocation->id) }}"
                                class="btn btn-danger btn-sm"
-                               onclick="return confirm('Delete this fee record?')">
+                               onclick="return confirm('Delete this allocation?')">
 
                                 🗑 Delete
 
@@ -150,10 +142,10 @@
 
                     <tr>
 
-                        <td colspan="8"
+                        <td colspan="6"
                             class="text-center text-danger">
 
-                            No Fee Records Found
+                            No Allocation Found
 
                         </td>
 

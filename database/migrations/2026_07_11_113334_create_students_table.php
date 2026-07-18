@@ -11,18 +11,35 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('students', function (Blueprint $table) {
-    $table->id();
-    $table->string('name');
-    $table->string('mobile')->unique();
-    $table->text('address');
-    $table->string('room_number');
-    $table->string('course');
-    $table->string('gender');
-    $table->string('parent_contact');
-    $table->string('fees_status');
-    $table->timestamps();
-});
+        Schema::create('students', function (Blueprint $table) {
+
+            $table->id();
+
+            // Link with users table
+            $table->foreignId('user_id')
+                  ->nullable()
+                  ->constrained('users')
+                  ->onDelete('cascade');
+
+            $table->string('name');
+
+            $table->string('mobile')->unique();
+
+            $table->text('address');
+
+            // Admin will fill these later
+            $table->string('room_number')->nullable();
+
+            $table->string('course')->nullable();
+
+            $table->string('gender')->nullable();
+
+            $table->string('parent_contact')->nullable();
+
+            $table->string('fees_status')->default('Pending');
+
+            $table->timestamps();
+        });
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Student;
 
 class Authentication extends Controller
 {
@@ -21,14 +22,20 @@ class Authentication extends Controller
                 'confirm_password' => 'required|same:password',
             ]);
 
-            DB::table('users')->insert([
+            // Create User
+            $userId = DB::table('users')->insertGetId([
                 'name' => $request->name,
                 'mobile' => $request->mobile,
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
+                'role' => 'student',
             ]);
 
-            return redirect('/login')->with('success', 'Registration Successful. Please Login.');
+
+            return redirect('/login')->with(
+                'success',
+                'Registration Successful. Please Login.'
+            );
         }
 
         return view('registerUser');
@@ -45,15 +52,21 @@ class Authentication extends Controller
             ]);
 
             $user = DB::table('users')
-                        ->where('name', $request->name)
-                        ->first();
+                ->where('name', $request->name)
+                ->first();
 
             if ($user && Hash::check($request->password, $user->password)) {
 
                 session([
                     'user_id' => $user->id,
                     'name' => $user->name,
+                    'role' => $user->role,
                 ]);
+
+                // Redirect according to role
+                if ($user->role == 'admin') {
+                    return redirect('/adminDashboard');
+                }
 
                 return redirect()->route('dashboard');
             }
@@ -66,16 +79,6 @@ class Authentication extends Controller
         return view('loginUser');
     }
 
-    // Dashboard
-    public function dashboard()
-    {
-        if (!session()->has('user_id')) {
-            return redirect('/login');
-        }
-
-        return view('dashboard');
-    }
-
     // Logout
     public function logout()
     {
@@ -83,5 +86,4 @@ class Authentication extends Controller
 
         return redirect('/login');
     }
-   
 }

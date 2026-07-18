@@ -1,172 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Add Student</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: linear-gradient(
+                135deg,
+                #eef2ff,
+                #e0e7ff,
+                #f5f3ff
+            );
+
+            min-height: 100vh;
+        }
+
+        .page-wrapper {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 25px;
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 680px;
+
+            background: #ffffff;
+
+            padding: 28px 32px;
+
+            border-radius: 20px;
+
+            box-shadow: 0 15px 40px rgba(79, 70, 229, 0.18);
+
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Heading */
+
+        h2 {
+            text-align: center;
+
+            color: #4f46e5;
+
+            margin: 0;
+
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #6b7280;
+
+            margin: 7px 0 25px;
+
+            font-size: 14px;
+        }
+
+        /* Form Layout */
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .row {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+        }
+
+        label {
+            display: block;
+
+            font-weight: 600;
+
+            font-size: 14px;
+
+            color: #374151;
+
+            margin-bottom: 6px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+
+            padding: 11px 13px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.25s;
+
+            background: #ffffff;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #6366f1;
+
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+        }
+
+        textarea {
+            height: 70px;
+
+            resize: vertical;
+        }
+
+        /* Error */
+
+        .error-box {
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            padding: 11px 14px;
+
+            border-radius: 9px;
+
+            margin-bottom: 16px;
+
+            font-size: 13px;
+        }
+
+        /* Success */
+
+        .success-box {
+            background: #dcfce7;
+
+            color: #166534;
+
+            padding: 11px 14px;
+
+            border-radius: 9px;
+
+            margin-bottom: 16px;
+        }
+
+        /* Bottom Buttons */
+
+        .button-row {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 14px;
+
+            margin-top: 22px;
+        }
+
+        .btn {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+
+            border: none;
+        }
+
+        /* Back Button */
+
+        .back-btn {
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+            border: 1px solid #c7d2fe;
+        }
+
+        .back-btn:hover {
+            background: #e0e7ff;
+        }
+
+        /* Add Student Button */
+
+        .submit-btn {
+            background: linear-gradient(
+                135deg,
+                #4f46e5,
+                #7c3aed
+            );
+
+            color: white;
+
+            box-shadow: 0 5px 12px rgba(79, 70, 229, 0.25);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+
+            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            .page-wrapper {
+                padding: 12px;
+            }
+
+            .form-card {
+                padding: 22px 18px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .button-row {
+                grid-template-columns: 1fr;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
-<body style="
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:linear-gradient(135deg,#74ebd5,#9face6,#fbc2eb);
-background-size:400% 400%;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;">
 
-<div style="
-width:500px;
-background:#fff;
-padding:30px;
-border-radius:20px;
-box-shadow:0 15px 35px rgba(0,0,0,0.25);">
+<body>
 
-<h2 style="
-text-align:center;
-color:#4f46e5;
-margin-bottom:10px;">
-🎓 Add Student
-</h2>
+<div class="page-wrapper">
 
-<p style="
-text-align:center;
-color:#666;
-margin-bottom:25px;">
-Fill the student details below
-</p>
+    <div class="form-card">
 
-<form action="/students/store" method="POST">
-@csrf
+        <!-- Heading -->
 
-<label style="font-weight:bold;">Student Name</label><br>
-<input type="text" name="name" placeholder="Enter Student Name"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:18px;
-border:2px solid #ddd;
-border-radius:10px;
-box-sizing:border-box;">
+        <h2>
+            🎓 Add Student
+        </h2>
 
-<label style="font-weight:bold;">Mobile Number</label><br>
-<input type="text" name="mobile" placeholder="Enter Mobile Number"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:18px;
-border:2px solid #ddd;
-border-radius:10px;
-box-sizing:border-box;">
+        <p class="subtitle">
+            Fill the student details below
+        </p>
 
-<label style="font-weight:bold;">Address</label><br>
-<textarea name="address" placeholder="Enter Address"
-style="
-width:100%;
-height:80px;
-padding:12px;
-margin-top:8px;
-margin-bottom:18px;
-border:2px solid #ddd;
-border-radius:10px;
-box-sizing:border-box;
-resize:none;"></textarea>
 
-<label style="font-weight:bold;">Room Number</label><br>
-<input type="text" name="room_number" placeholder="Enter Room Number"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:18px;
-border:2px solid #ddd;
-border-radius:10px;
-box-sizing:border-box;">
+        <!-- Validation Errors -->
 
-<label style="font-weight:bold;">Course</label><br>
-<input type="text" name="course" placeholder="Enter Course"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:18px;
-border:2px solid #ddd;
-border-radius:10px;
-box-sizing:border-box;">
+        @if($errors->any())
 
-<label style="font-weight:bold;">Gender</label><br>
-<select name="gender"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:18px;
-border:2px solid #ddd;
-border-radius:10px;">
+            <div class="error-box">
 
-<option value="">Select Gender</option>
-<option value="Male">Male</option>
-<option value="Female">Female</option>
-<option value="Other">Other</option>
+                <ul style="margin:0; padding-left:20px;">
 
-</select>
+                    @foreach($errors->all() as $error)
 
-<label style="font-weight:bold;">Parent Contact</label><br>
-<input type="text" name="parent_contact" placeholder="Enter Parent Contact"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:18px;
-border:2px solid #ddd;
-border-radius:10px;
-box-sizing:border-box;">
+                        <li>
+                            {{ $error }}
+                        </li>
 
-<label style="font-weight:bold;">Fees Status</label><br>
-<select name="fees_status"
-style="
-width:100%;
-padding:12px;
-margin-top:8px;
-margin-bottom:25px;
-border:2px solid #ddd;
-border-radius:10px;">
+                    @endforeach
 
-<option value="">Select Fees Status</option>
-<option value="Paid">Paid</option>
-<option value="Pending">Pending</option>
+                </ul>
 
-</select>
+            </div>
 
-<button type="submit"
-style="
-width:100%;
-padding:14px;
-border:none;
-border-radius:12px;
-background:linear-gradient(to right,#4f46e5,#7c3aed);
-color:white;
-font-size:17px;
-font-weight:bold;
-cursor:pointer;">
-➕ Add Student
-</button><br>
-@if(session('success'))
-    <div style="
-        background:#d4edda;
-        color:#155724;
-        padding:10px;
-        margin-bottom:15px;
-        border-radius:5px;">
-        {{ session('success') }}
+        @endif
+
+
+        <!-- Success Message -->
+
+        @if(session('success'))
+
+            <div class="success-box">
+
+                {{ session('success') }}
+
+            </div>
+
+        @endif
+
+
+        <!-- Form -->
+
+        <form action="{{ url('/students/store') }}"
+              method="POST">
+
+            @csrf
+
+
+            <!-- Registered User -->
+
+            <div class="form-group">
+
+                <label>
+                    Registered User
+                </label>
+
+                <select name="user_id">
+
+                    <option value="">
+                        Select User
+                    </option>
+
+                    @foreach($users as $user)
+
+                        <option value="{{ $user->id }}"
+                            {{ old('user_id') == $user->id ? 'selected' : '' }}>
+
+                            {{ $user->name }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+
+            <!-- Student Name + Mobile -->
+
+            <div class="row">
+
+                <div class="form-group">
+
+                    <label>
+                        Student Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter Student Name"
+                        value="{{ old('name') }}">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Mobile Number
+                    </label>
+
+                    <input
+                        type="text"
+                        name="mobile"
+                        placeholder="Enter Mobile Number"
+                        value="{{ old('mobile') }}">
+
+                </div>
+
+            </div>
+
+
+            <!-- Address -->
+
+            <div class="form-group">
+
+                <label>
+                    Address
+                </label>
+
+                <textarea
+                    name="address"
+                    placeholder="Enter Address">{{ old('address') }}</textarea>
+
+            </div>
+
+
+            <!-- Room + Course -->
+
+            <div class="row">
+
+                <div class="form-group">
+
+                    <label>
+                        Room Number
+                    </label>
+
+                    <input
+                        type="text"
+                        name="room_number"
+                        placeholder="Enter Room Number"
+                        value="{{ old('room_number') }}">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Course
+                    </label>
+
+                    <input
+                        type="text"
+                        name="course"
+                        placeholder="Enter Course"
+                        value="{{ old('course') }}">
+
+                </div>
+
+            </div>
+
+
+            <!-- Gender + Parent Contact -->
+
+            <div class="row">
+
+                <div class="form-group">
+
+                    <label>
+                        Gender
+                    </label>
+
+                    <select name="gender">
+
+                        <option value="">
+                            Select Gender
+                        </option>
+
+                        <option value="Male"
+                            {{ old('gender') == 'Male' ? 'selected' : '' }}>
+                            Male
+                        </option>
+
+                        <option value="Female"
+                            {{ old('gender') == 'Female' ? 'selected' : '' }}>
+                            Female
+                        </option>
+
+                        <option value="Other"
+                            {{ old('gender') == 'Other' ? 'selected' : '' }}>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Parent Contact
+                    </label>
+
+                    <input
+                        type="text"
+                        name="parent_contact"
+                        placeholder="Enter Parent Contact"
+                        value="{{ old('parent_contact') }}">
+
+                </div>
+
+            </div>
+
+
+            <!-- Fees Status -->
+
+            <div class="form-group">
+
+                <label>
+                    Fees Status
+                </label>
+
+                <select name="fees_status">
+
+                    <option value="">
+                        Select Fees Status
+                    </option>
+
+                    <option value="Paid"
+                        {{ old('fees_status') == 'Paid' ? 'selected' : '' }}>
+                        Paid
+                    </option>
+
+                    <option value="Pending"
+                        {{ old('fees_status') == 'Pending' ? 'selected' : '' }}>
+                        Pending
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Bottom Buttons -->
+
+            <div class="button-row">
+
+                <!-- Back Button -->
+
+                <a href="{{ url('/adminDashboard') }}"
+                   class="btn submit-btn">
+
+                    ← Back to Admin Dashboard
+
+                </a>
+
+
+                <!-- Add Student Button -->
+
+                <button
+                    type="submit"
+                    class="btn submit-btn">
+
+                    ➕ Add Student
+
+                </button>
+
+            </div>
+
+
+        </form>
+
     </div>
-@endif
-</form>
 
 </div>
 
 </body>
+
 </html>
