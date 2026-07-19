@@ -6,18 +6,21 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class checklogin
+class CheckLogin
 {
     /**
      * Handle an incoming request.
      *
-     * @param  Closure(Request): (Response)  $next
+     * @param Closure(Request): (Response) $next
      */
-    public function handle(Request $request, Closure $next): Response
-    {
-        if(session()->has('name')){
+    public function handle(
+        Request $request,
+        Closure $next
+    ): Response {
+        if (session()->has('user_id')) {
             return $next($request);
         }
+
         return redirect('/login');
     }
 }
