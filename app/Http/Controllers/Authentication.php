@@ -25,7 +25,7 @@ class Authentication extends Controller
             $nextId = (DB::table('users')->max('id') ?? 0) + 1;
 
             // Create User
-            $userId = DB::table('users')->insertGetId([
+            DB::table('users')->insert([
                 'id' => $nextId,
                 'name' => $request->name,
                 'mobile' => $request->mobile,
