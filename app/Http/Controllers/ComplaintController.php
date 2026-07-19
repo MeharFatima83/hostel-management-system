@@ -34,7 +34,7 @@ class ComplaintController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'student_id' => 'required',
+            'student_id' => 'required|exists:students,id',
             'title' => 'required|string',
             'description' => 'required|string',
         ]);
@@ -67,7 +67,9 @@ class ComplaintController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'student_id' => 'required',
+            'student_id' => 'required|exists:students,id',
+            'title' => 'required|string',
+            'description' => 'required|string',
             'status' => 'required|in:Pending,Solved',
         ]);
 
@@ -75,6 +77,8 @@ class ComplaintController extends Controller
 
         $complaint->update([
             'student_id' => $request->student_id,
+            'title' => $request->title,
+            'description' => $request->description,
             'status' => $request->status,
         ]);
 
@@ -85,7 +89,9 @@ class ComplaintController extends Controller
     // Delete Complaint
     public function destroy($id)
     {
-        Complaint::destroy($id);
+        $complaint = Complaint::findOrFail($id);
+
+        $complaint->delete();
 
         return redirect('/complaints')
             ->with('success', 'Complaint Deleted Successfully');
@@ -115,7 +121,7 @@ class ComplaintController extends Controller
         $student = Student::where(
             'user_id',
             session('user_id')
-        )->first();
+        )->firstOrFail();
 
         Complaint::create([
             'student_id' => $student->id,
@@ -134,7 +140,7 @@ class ComplaintController extends Controller
         $student = Student::where(
             'user_id',
             session('user_id')
-        )->first();
+        )->firstOrFail();
 
         $complaints = Complaint::where(
             'student_id',

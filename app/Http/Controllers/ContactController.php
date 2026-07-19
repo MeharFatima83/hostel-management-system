@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\ContactMessage;
 
 class ContactController extends Controller
 {
-    // Show contact page
+    // Show Contact Page
     public function index()
     {
         return view('contact');
@@ -23,7 +24,11 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
+        // Manually generate next Contact Message ID
+        $nextId = (DB::table('contact_messages')->max('id') ?? 0) + 1;
+
         ContactMessage::create([
+            'id' => $nextId,
             'name' => $request->name,
             'email' => $request->email,
             'subject' => $request->subject,
@@ -31,7 +36,10 @@ class ContactController extends Controller
         ]);
 
         return redirect('/contact')
-            ->with('success', 'Your message has been sent successfully!');
+            ->with(
+                'success',
+                'Your message has been sent successfully!'
+            );
     }
 
     // Admin Contact Messages
@@ -39,7 +47,10 @@ class ContactController extends Controller
     {
         $messages = ContactMessage::latest()->get();
 
-        return view('contact.index', compact('messages'));
+        return view(
+            'contact.index',
+            compact('messages')
+        );
     }
 
     // Delete Message
@@ -48,6 +59,9 @@ class ContactController extends Controller
         ContactMessage::findOrFail($id)->delete();
 
         return redirect('/contact-messages')
-            ->with('success', 'Message Deleted Successfully');
+            ->with(
+                'success',
+                'Message Deleted Successfully'
+            );
     }
 }

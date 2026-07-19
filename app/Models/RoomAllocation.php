@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class RoomAllocation extends Model
 {
     protected $fillable = [
+         'id',  
         'student_id',
         'room_id',
         'allocation_date',

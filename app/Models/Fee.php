@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class Fee extends Model
 {
     protected $fillable = [
+        'id',
         'student_id',
         'total_fee',
         'paid_amount',

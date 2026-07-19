@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Student;
 
 class Authentication extends Controller
 {
@@ -22,15 +21,18 @@ class Authentication extends Controller
                 'confirm_password' => 'required|same:password',
             ]);
 
+            // Manually generate next user ID
+            $nextId = (DB::table('users')->max('id') ?? 0) + 1;
+
             // Create User
             $userId = DB::table('users')->insertGetId([
+                'id' => $nextId,
                 'name' => $request->name,
                 'mobile' => $request->mobile,
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
                 'role' => 'student',
             ]);
-
 
             return redirect('/login')->with(
                 'success',
@@ -63,7 +65,6 @@ class Authentication extends Controller
                     'role' => $user->role,
                 ]);
 
-                // Redirect according to role
                 if ($user->role == 'admin') {
                     return redirect('/adminDashboard');
                 }

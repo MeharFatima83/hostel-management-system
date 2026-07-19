@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Notice;
 
 class NoticeController extends Controller
@@ -12,7 +13,10 @@ class NoticeController extends Controller
     {
         $notices = Notice::all();
 
-        return view('notice.index', compact('notices'));
+        return view(
+            'notice.index',
+            compact('notices')
+        );
     }
 
     // Show Add Notice Form
@@ -30,14 +34,21 @@ class NoticeController extends Controller
             'publish_date' => 'required|date',
         ]);
 
+        // Generate next ID manually for TiDB
+        $noticeId = (DB::table('notices')->max('id') ?? 0) + 1;
+
         Notice::create([
+            'id' => $noticeId,
             'title' => $request->title,
             'description' => $request->description,
             'publish_date' => $request->publish_date,
         ]);
 
         return redirect('/notices')
-                ->with('success', 'Notice Added Successfully');
+            ->with(
+                'success',
+                'Notice Added Successfully'
+            );
     }
 
     // Show Edit Form
@@ -45,7 +56,10 @@ class NoticeController extends Controller
     {
         $notice = Notice::findOrFail($id);
 
-        return view('notice.edit', compact('notice'));
+        return view(
+            'notice.edit',
+            compact('notice')
+        );
     }
 
     // Update Notice
@@ -66,7 +80,10 @@ class NoticeController extends Controller
         ]);
 
         return redirect('/notices')
-                ->with('success', 'Notice Updated Successfully');
+            ->with(
+                'success',
+                'Notice Updated Successfully'
+            );
     }
 
     // Delete Notice
@@ -77,6 +94,9 @@ class NoticeController extends Controller
         $notice->delete();
 
         return redirect('/notices')
-                ->with('success', 'Notice Deleted Successfully');
+            ->with(
+                'success',
+                'Notice Deleted Successfully'
+            );
     }
 }

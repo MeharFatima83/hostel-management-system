@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Notice extends Model
-{
+{ 
     protected $fillable = [
         'title',
+        'id',
         'description',
         'publish_date'
     ];

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Student;
 use App\Models\User;
 
@@ -17,15 +18,14 @@ class StudentController extends Controller
     }
 
     // Show Add Student Form
-  // Show Add Student Form
-public function create()
-{
-    $users = User::where('role', 'student')
-                 ->whereDoesntHave('student')
-                 ->get();
+    public function create()
+    {
+        $users = User::where('role', 'student')
+                     ->whereDoesntHave('student')
+                     ->get();
 
-    return view('student.create', compact('users'));
-}
+        return view('student.create', compact('users'));
+    }
 
     // Store Student
     public function store(Request $request)
@@ -42,7 +42,11 @@ public function create()
             'fees_status' => 'required',
         ]);
 
+        // Manually generate next student ID
+        $nextStudentId = (DB::table('students')->max('id') ?? 0) + 1;
+
         Student::create([
+            'id' => $nextStudentId,
             'user_id' => $request->user_id,
             'name' => $request->name,
             'mobile' => $request->mobile,
