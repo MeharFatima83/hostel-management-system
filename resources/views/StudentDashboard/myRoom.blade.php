@@ -1,104 +1,162 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>My Room</title>
+    <title>My Room</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
-<style>
+    <style>
 
-body{
-    background:#f5f5f5;
-}
+        body {
+            background: #f5f5f5;
+        }
 
-.card{
-    margin-top:50px;
-    border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,.2);
-}
+        .card {
+            margin-top: 50px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .2);
+        }
 
-</style>
+    </style>
 
 </head>
+
 
 <body>
 
 <div class="container">
 
-<div class="card">
+    <div class="card">
 
-<div class="card-header bg-primary text-white">
+        <div class="card-header bg-primary text-white">
 
-<h3>My Room Details</h3>
+            <h3>
+                My Room Details
+            </h3>
 
-</div>
+        </div>
 
-<div class="card-body">
 
-<table class="table table-bordered">
+        <div class="card-body">
 
-<tr>
+            <table class="table table-bordered">
 
-<th width="30%">Student Name</th>
+                <tr>
 
-<td>{{ $student->name }}</td>
+                    <th width="30%">
+                        Student Name
+                    </th>
 
-</tr>
+                    <td>
+                        {{ $student->name }}
+                    </td>
 
-<tr>
+                </tr>
 
-<th>Room Number</th>
 
-<td>{{ $student->room_number ?? 'Not Allocated' }}</td>
+                <tr>
 
-</tr>
+                    <th>
+                        Room Number
+                    </th>
 
-<tr>
+                    <td>
 
-<th>Course</th>
+                        @if($allocation && $allocation->room)
 
-<td>{{ $student->course ?? '-' }}</td>
+                            {{ $allocation->room->room_number }}
 
-</tr>
+                        @else
 
-<tr>
+                            Not Allocated
 
-<th>Status</th>
+                        @endif
 
-<td>
+                    </td>
 
-@if($student->room_number)
+                </tr>
 
-<span class="badge bg-success">
-Allocated
-</span>
 
-@else
+                <tr>
 
-<span class="badge bg-danger">
-Not Allocated
-</span>
+                    <th>
+                        Course
+                    </th>
 
-@endif
+                    <td>
+                        {{ $student->course ?? '-' }}
+                    </td>
 
-</td>
+                </tr>
 
-</tr>
 
-</table>
+                <tr>
 
-<a href="/StudentDashboard" class="btn btn-primary">
+                    <th>
+                        Allocation Date
+                    </th>
 
-⬅ Back Dashboard
+                    <td>
 
-</a>
+                        @if($allocation)
 
-</div>
+                            {{ $allocation->allocation_date }}
 
-</div>
+                        @else
+
+                            -
+
+                        @endif
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <td>
+
+                        @if($allocation && $allocation->status == 'Allocated')
+
+                            <span class="badge bg-success">
+                                Allocated
+                            </span>
+
+                        @else
+
+                            <span class="badge bg-danger">
+                                Not Allocated
+                            </span>
+
+                        @endif
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+            <a href="/StudentDashboard"
+               class="btn btn-primary">
+
+                ⬅ Back Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
 
 </div>
 

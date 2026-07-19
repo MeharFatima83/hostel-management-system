@@ -111,18 +111,33 @@ class StudentDashboardController extends Controller
     }
 
 
-    public function myRoom()
-    {
-        $student = Student::where(
-            'user_id',
-            session('user_id')
-        )->first();
-
-        return view(
-            'StudentDashboard.myRoom',
-            compact('student')
-        );
+  public function myRoom()
+{
+    if (!session()->has('user_id')) {
+        return redirect('/login');
     }
+
+    $student = Student::where(
+        'user_id',
+        session('user_id')
+    )->first();
+
+    if (!$student) {
+        return redirect('/StudentDashboard');
+    }
+
+    // Student ki latest allocated room find karo
+    $allocation = \App\Models\RoomAllocation::with('room')
+        ->where('student_id', $student->id)
+        ->where('status', 'Allocated')
+        ->latest()
+        ->first();
+
+    return view(
+        'StudentDashboard.myRoom',
+        compact('student', 'allocation')
+    );
+}
 
 
     public function myFees()
