@@ -65,7 +65,7 @@ class adminController extends Controller
 
                 'totalUsers',
 
-                'totalMessages', // ✅ YE MISSING THA
+                'totalMessages', 
 
                 'totalComplaints',
 
